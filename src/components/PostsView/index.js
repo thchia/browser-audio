@@ -1,5 +1,6 @@
 import React from 'react'
 
+import GroupedPosts from '../GroupedPosts'
 import Post from '../Post'
 
 export default class PostsView extends React.Component {
@@ -7,20 +8,33 @@ export default class PostsView extends React.Component {
     super()
     this.state = {
       sortBy: 'title',
-      sortOrder: 'asc'
+      sortOrder: 'asc',
+      groupByUserId: true
     }
     this.handleChangeSortBy = this.handleChangeSortBy.bind(this)
     this.handleChangeSortOrder = this.handleChangeSortOrder.bind(this)
   }
+
   handleChangeSortBy(e) {
     const sortBy = e.target.value
     this.setState({ sortBy })
   }
+
   handleChangeSortOrder(e) {
     const sortOrder = e.target.value
     this.setState({ sortOrder })
   }
+
   renderPosts(posts) {
+    if (!posts.length)
+      return <div style={styles.empty}>Click 'Fetch Posts' to get posts</div>
+    if (this.state.groupByUserId) {
+      return this.groupPosts(posts)
+    }
+    return this.sortPosts(posts)
+  }
+
+  sortPosts(posts) {
     let sortedPosts = []
     if (this.state.sortBy && this.state.sortOrder) {
       const { sortBy, sortOrder } = this.state
@@ -30,9 +44,20 @@ export default class PostsView extends React.Component {
         return 0
       })
     }
-    if (!sortedPosts.length)
-      return <div style={styles.empty}>Click 'Fetch Posts' to get posts</div>
     return sortedPosts.map(post => <Post key={post.id} {...post} />)
+  }
+
+  groupPosts(posts) {
+    const groupedPosts = [...posts].reduce((acc, curr) => {
+      const currentUserId = curr.userId
+      if (acc[currentUserId]) {
+        acc[currentUserId] = [...acc[currentUserId], curr]
+      } else {
+        acc[currentUserId] = [curr]
+      }
+      return acc
+    }, {})
+    return <GroupedPosts posts={groupedPosts} />
   }
   render() {
     const { props, state } = this
