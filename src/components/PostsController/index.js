@@ -15,7 +15,7 @@ export default class PostsController extends React.Component {
     this.handleFetchPosts = this.handleFetchPosts.bind(this)
   }
   async handleFetchPosts() {
-    this.setState({ fetching: true })
+    this.setState({ fetching: true, error: '' })
     try {
       const response = await fetch(`${baseURL}/posts`)
       const posts = await response.json()

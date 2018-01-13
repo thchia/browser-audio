@@ -61,6 +61,7 @@ export default class PostsView extends React.Component {
             <option value="desc">Descending</option>
           </select>
         </div>
+        {props.error ? <div style={styles.error}>{props.error}</div> : null}
         <div>
           {props.fetching ? 'Loading...' : this.renderPosts(props.posts)}
         </div>
@@ -93,5 +94,10 @@ export const styles = {
   },
   empty: {
     padding: 20
+  },
+  error: {
+    padding: 20,
+    backgroundColor: '#ff3c5e',
+    color: 'white'
   }
 }
