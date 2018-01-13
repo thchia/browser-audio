@@ -30,6 +30,8 @@ export default class PostsView extends React.Component {
         return 0
       })
     }
+    if (!sortedPosts.length)
+      return <div style={styles.empty}>Click 'Fetch Posts' to get posts</div>
     return sortedPosts.map(post => <Post key={post.id} {...post} />)
   }
   render() {
@@ -88,5 +90,8 @@ export const styles = {
   select: {
     height: 30,
     marginLeft: 20
+  },
+  empty: {
+    padding: 20
   }
 }
