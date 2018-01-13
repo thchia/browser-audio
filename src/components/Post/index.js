@@ -3,8 +3,9 @@ import React from 'react'
 export default props => (
   <div style={styles.container}>
     <div style={styles.title}>Title: {props.title}</div>
-    <div style={styles.userId}>User: {props.userId}</div>
+    <div style={styles.userId}>User: {props.username}</div>
     <div style={styles.body}>{props.body}</div>
+    <hr />
   </div>
 )
 

@@ -29,13 +29,16 @@ export default class GroupedPosts extends React.Component {
           const postsAreHidden = state.hidden.find(id => id === user)
           return (
             <div key={user} style={styles.user}>
-              <button onClick={() => this.toggleHidePosts(user)}>
+              <strong>Username</strong>: {props.posts[user].username}
+              <button
+                style={styles.button}
+                onClick={() => this.toggleHidePosts(user)}
+              >
                 {postsAreHidden ? 'Show' : 'Hide'} Posts
               </button>
-              <strong>User ID</strong>: {user}
               {postsAreHidden
                 ? null
-                : props.posts[user].map(post => (
+                : props.posts[user].posts.map(post => (
                     <Post key={post.id} {...post} />
                   ))}
             </div>
@@ -49,5 +52,12 @@ export default class GroupedPosts extends React.Component {
 export const styles = {
   user: {
     padding: 20
+  },
+  button: {
+    marginLeft: 10,
+    padding: 10,
+    border: 'none',
+    backgroundColor: 'lightGrey',
+    borderRadius: 6
   }
 }

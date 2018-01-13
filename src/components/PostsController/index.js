@@ -10,23 +10,27 @@ export default class PostsController extends React.Component {
     this.state = {
       fetching: false,
       posts: [],
-      error: ''
+      error: '',
+      users: []
     }
     this.handleFetchPosts = this.handleFetchPosts.bind(this)
   }
   async handleFetchPosts() {
     this.setState({ fetching: true, error: '' })
     try {
-      const response = await fetch(`${baseURL}/posts`)
-      const posts = await response.json()
+      const userResponse = await fetch(`${baseURL}/users`)
+      const users = await userResponse.json()
+      const postResponse = await fetch(`${baseURL}/posts`)
+      const posts = await postResponse.json()
       this.setState({
         fetching: false,
-        posts
+        posts,
+        users
       })
     } catch (err) {
       this.setState({
         fetching: false,
-        error: 'Error fetching posts'
+        error: 'Error fetching data'
       })
     }
   }
