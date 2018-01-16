@@ -27,3 +27,5 @@ export default (state = initialUsers, action) => {
       return state
   }
 }
+
+export const usersSelector = state => state.users
