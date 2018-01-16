@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
-import PostsView from '../PostsController'
+import PostsView from '../PostsView'
 import TracksController from '../TracksController'
 import NavigationLink from '../NavigationLink'
 

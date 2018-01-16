@@ -21,7 +21,7 @@ export const updateSortBy = sortBy => ({
 })
 
 export const toggleSortOrder = () => ({
-  type: types.UPDATE_SORT_BY,
+  type: types.TOGGLE_SORT_ORDER,
   payload: {}
 })
 

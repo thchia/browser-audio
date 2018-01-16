@@ -2,8 +2,9 @@ import React from 'react'
 
 import GroupedPosts from '../GroupedPosts'
 import Post from '../Post'
+import connector from './container'
 
-export default class PostsView extends React.Component {
+export class PostsView extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -30,14 +31,13 @@ export default class PostsView extends React.Component {
     this.setState({ groupByUserId: !this.state.groupByUserId })
   }
 
-  renderPosts(posts, users) {
-    const postsWithJoinedUsernames = this.joinPostsWithUsernames(posts, users)
-    if (!postsWithJoinedUsernames.length)
+  renderPosts(posts) {
+    if (posts.length === 0)
       return <div style={styles.empty}>Click 'Fetch Posts' to get posts</div>
-    if (this.state.groupByUserId) {
-      return this.groupPosts(postsWithJoinedUsernames)
+    if (this.props.groupByUserId) {
+      return <GroupedPosts posts={posts} />
     }
-    return this.sortPosts(postsWithJoinedUsernames)
+    return posts.map(post => <Post key={post.id} {...post} />)
   }
 
   sortPosts(posts) {
@@ -74,27 +74,28 @@ export default class PostsView extends React.Component {
   }
 
   render() {
-    const { props, state } = this
+    const { props } = this
     return (
       <div>
-        {/* <div>Posts</div> */}
         <div style={styles.toolbar}>
           <button style={styles.button} onClick={props.requestFetchPosts}>
-            {props.fetching ? 'Loading...' : 'Fetch Posts'}
+            {props.fetching || props.fetchingUsers
+              ? 'Loading...'
+              : 'Fetch Posts'}
           </button>
           <label style={styles.label}>Sort By</label>
           <select
             style={styles.select}
-            onChange={this.handleChangeSortBy}
-            value={state.sortBy}
+            onChange={this.props.handleChangeSortBy}
+            value={props.sortBy}
           >
             <option value="title">Title</option>
             <option value="userId">User ID</option>
           </select>
           <select
             style={styles.select}
-            onChange={this.handleChangeSortOrder}
-            value={state.sortOrder}
+            onChange={this.props.handleChangeSortOrder}
+            value={props.sortOrder}
           >
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
@@ -105,20 +106,20 @@ export default class PostsView extends React.Component {
           <input
             id="groupByUserId"
             type="checkbox"
-            checked={state.groupByUserId}
-            onChange={this.toggleGroupByUserId}
+            checked={props.groupByUserId}
+            onChange={this.props.toggleGroupByUserId}
           />
         </div>
         {props.error ? <div style={styles.error}>{props.error}</div> : null}
         <div>
-          {props.fetching
-            ? 'Loading...'
-            : this.renderPosts(props.posts, props.users)}
+          {props.fetching ? 'Loading...' : this.renderPosts(props.posts)}
         </div>
       </div>
     )
   }
 }
+
+export default connector(PostsView)
 
 export const styles = {
   toolbar: {
