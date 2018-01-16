@@ -28,7 +28,7 @@ export class TrackPlayer extends React.Component {
         <React.Fragment key={track.id}>
           <div style={styles.trackControls}>
             <button
-              style={styles.button(this.props.trackMuted(track.id))}
+              style={styles.button(this.props.trackMuted(track.id), 'pink')}
               onClick={() => this.props.muteSingleTrack(track.id)}
             >
               Mute
@@ -82,7 +82,10 @@ export class TrackPlayer extends React.Component {
             <button style={styles.button()} onClick={this.stop}>
               Stop
             </button>
-            <button style={styles.button(props.muted)} onClick={this.muteAll}>
+            <button
+              style={styles.button(props.muted, 'pink')}
+              onClick={this.muteAll}
+            >
               Mute
             </button>
           </div>
@@ -114,9 +117,9 @@ export const styles = {
   masterControls: {
     padding: '20px 0'
   },
-  button: active => ({
+  button: (active, color = 'lightblue') => ({
     margin: '0 10px',
-    backgroundColor: active ? 'lightblue' : 'lightgrey',
+    backgroundColor: active ? color : 'lightgrey',
     padding: '5px 10px',
     border: 'none',
     borderRadius: 4

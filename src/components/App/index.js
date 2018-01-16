@@ -8,7 +8,7 @@ import NavigationLink from '../NavigationLink'
 class App extends Component {
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         <nav style={styles.navigationContainer}>
           <ul style={styles.navigationList}>
             <NavigationLink to="/" exact label="Posts" />
@@ -25,7 +25,11 @@ class App extends Component {
 export default App
 
 export const styles = {
-  container: {},
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%'
+  },
   navigationContainer: {
     backgroundColor: 'darkGrey'
   },
