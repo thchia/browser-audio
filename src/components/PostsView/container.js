@@ -7,11 +7,12 @@ import {
   updateSortBy
 } from '../../actions/posts'
 import { requestUsers } from '../../actions/users'
-import { postsSelector } from '../../reducers/posts'
+import { postsSelector, sortedPostsWithUsernames } from '../../reducers/posts'
 import { usersSelector } from '../../reducers/users'
 
 const mapStateToProps = state => ({
   ...postsSelector(state),
+  posts: sortedPostsWithUsernames(state),
   fetchingUsers: usersSelector(state).fetching
 })
 

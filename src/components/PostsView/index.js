@@ -5,72 +5,13 @@ import Post from '../Post'
 import connector from './container'
 
 export class PostsView extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      sortBy: 'title',
-      sortOrder: 'asc',
-      groupByUserId: false
-    }
-    this.handleChangeSortBy = this.handleChangeSortBy.bind(this)
-    this.handleChangeSortOrder = this.handleChangeSortOrder.bind(this)
-    this.toggleGroupByUserId = this.toggleGroupByUserId.bind(this)
-  }
-
-  handleChangeSortBy(e) {
-    const sortBy = e.target.value
-    this.setState({ sortBy })
-  }
-
-  handleChangeSortOrder(e) {
-    const sortOrder = e.target.value
-    this.setState({ sortOrder })
-  }
-
-  toggleGroupByUserId() {
-    this.setState({ groupByUserId: !this.state.groupByUserId })
-  }
-
   renderPosts(posts) {
-    if (posts.length === 0)
+    if (posts.length === 0 || Object.keys(posts || []).length === 0)
       return <div style={styles.empty}>Click 'Fetch Posts' to get posts</div>
     if (this.props.groupByUserId) {
       return <GroupedPosts posts={posts} />
     }
     return posts.map(post => <Post key={post.id} {...post} />)
-  }
-
-  sortPosts(posts) {
-    let sortedPosts = []
-    if (this.state.sortBy && this.state.sortOrder) {
-      const { sortBy, sortOrder } = this.state
-      sortedPosts = [...posts].sort((a, b) => {
-        if (a[sortBy] < b[sortBy]) return sortOrder === 'asc' ? -1 : 1
-        if (a[sortBy] > b[sortBy]) return sortOrder === 'asc' ? 1 : -1
-        return 0
-      })
-    }
-    return sortedPosts.map(post => <Post key={post.id} {...post} />)
-  }
-
-  groupPosts(posts) {
-    const groupedPosts = [...posts].reduce((acc, curr) => {
-      const currentUserId = curr.userId
-      if (acc[currentUserId]) {
-        acc[currentUserId].posts = [...acc[currentUserId].posts, curr]
-      } else {
-        acc[currentUserId] = { username: curr.username, posts: [curr] }
-      }
-      return acc
-    }, {})
-    return <GroupedPosts posts={groupedPosts} />
-  }
-
-  joinPostsWithUsernames(posts, users) {
-    return posts.map(post => {
-      const { username } = users.find(user => user.id === post.userId)
-      return { ...post, username }
-    })
   }
 
   render() {
@@ -90,16 +31,17 @@ export class PostsView extends React.Component {
             value={props.sortBy}
           >
             <option value="title">Title</option>
-            <option value="userId">User ID</option>
+            <option value="username">Username</option>
           </select>
           <select
             style={styles.select}
-            onChange={this.props.handleChangeSortOrder}
+            onChange={props.handleChangeSortOrder}
             value={props.sortOrder}
           >
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
+          <span style={styles.or}>or</span>
           <label style={styles.label} htmlFor="groupByUserId">
             Group By User ID
           </label>
@@ -107,12 +49,14 @@ export class PostsView extends React.Component {
             id="groupByUserId"
             type="checkbox"
             checked={props.groupByUserId}
-            onChange={this.props.toggleGroupByUserId}
+            onChange={props.toggleGroupByUserId}
           />
         </div>
         {props.error ? <div style={styles.error}>{props.error}</div> : null}
         <div>
-          {props.fetching ? 'Loading...' : this.renderPosts(props.posts)}
+          {props.fetching || props.fetchingUsers
+            ? 'Loading...'
+            : this.renderPosts(props.posts)}
         </div>
       </div>
     )
@@ -125,6 +69,9 @@ export const styles = {
   toolbar: {
     backgroundColor: '#e0e0e0',
     padding: 5
+  },
+  or: {
+    margin: '0 10px'
   },
   button: {
     color: 'white',

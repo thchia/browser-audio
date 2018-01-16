@@ -45,8 +45,14 @@ export const sortedPostsWithUsernames = state => {
   const posts = [...postsSelector(state).posts]
   const { groupByUserId, sortBy, sortOrder } = postsSelector(state)
 
+  const postsWithUsername = posts.map(post => {
+    const user = users.find(user => user.id === post.userId)
+    if (!user) return post
+    return { ...post, username: user.username }
+  })
+
   if (groupByUserId) {
-    return posts.reduce((acc, curr) => {
+    return postsWithUsername.reduce((acc, curr) => {
       const currentUserId = curr.userId
       if (acc[currentUserId]) {
         acc[currentUserId].posts = [...acc[currentUserId].posts, curr]
@@ -57,14 +63,9 @@ export const sortedPostsWithUsernames = state => {
     }, {})
   }
 
-  const sortedPosts = posts.sort((a, b) => {
+  return postsWithUsername.sort((a, b) => {
     if (a[sortBy] < b[sortBy]) return sortOrder === 'asc' ? -1 : 1
     if (a[sortBy] > b[sortBy]) return sortOrder === 'asc' ? 1 : -1
     return 0
-  })
-  sortedPosts.posts.map(post => {
-    const user = users.find(user => user.id === post.id)
-    if (!user) return post
-    return { ...post, username: user.username }
   })
 }
