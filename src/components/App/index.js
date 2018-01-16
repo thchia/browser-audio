@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
 import PostsView from '../PostsController'
-import TracksView from '../TracksView'
+import TracksController from '../TracksController'
 import NavigationLink from '../NavigationLink'
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
           </ul>
         </nav>
         <Route exact path="/" component={PostsView} />
-        <Route path="/tracks" component={TracksView} />
+        <Route path="/tracks" component={TracksController} />
       </div>
     )
   }
