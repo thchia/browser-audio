@@ -1,0 +1,3 @@
+export const REQUEST_USERS = 'REQUEST_USERS'
+export const USERS_SUCCESS = 'USERS_SUCCESS'
+export const USERS_FAILED = 'USERS_FAILED'
