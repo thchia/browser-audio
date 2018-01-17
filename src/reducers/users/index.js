@@ -1,6 +1,6 @@
 import * as types from '../../actions/users/types'
 
-const initialUsers = {
+export const initialUsers = {
   fetching: false,
   users: [],
   error: ''

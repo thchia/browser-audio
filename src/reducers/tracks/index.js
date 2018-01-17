@@ -1,4 +1,5 @@
 import * as types from '../../actions/tracks/types'
+import { updateInArray } from '../helpers'
 
 export const initialState = {
   playing: false,
@@ -38,11 +39,11 @@ export default (state = initialState, action) => {
         added: true,
         node: action.payload.node
       }
-      const splicedTracks = [
-        ...state.tracks.slice(0, registeredTrackIndex),
-        registeredTrack,
-        ...state.tracks.slice(registeredTrackIndex + 1)
-      ]
+      const splicedTracks = updateInArray(
+        state.tracks,
+        registeredTrackIndex,
+        registeredTrack
+      )
       return { ...state, tracks: splicedTracks }
     case types.UNREGISTER_TRACK:
       const existingTrackIndex = state.tracks.findIndex(
@@ -54,11 +55,11 @@ export default (state = initialState, action) => {
         added: false,
         node: undefined
       }
-      const newTracks = [
-        ...state.tracks.slice(0, existingTrackIndex),
-        unregisteredTrack,
-        ...state.tracks.slice(existingTrackIndex + 1)
-      ]
+      const newTracks = updateInArray(
+        state.tracks,
+        existingTrackIndex,
+        unregisteredTrack
+      )
       return { ...state, tracks: newTracks }
     case types.TOGGLE_MASTER_PLAY:
       return { ...state, playing: true }
@@ -90,11 +91,11 @@ export default (state = initialState, action) => {
         ...state.tracks[indexToToggle],
         added: !state.tracks[indexToToggle].added
       }
-      const addedTracks = [
-        ...state.tracks.slice(0, indexToToggle),
-        toggledTrack,
-        ...state.tracks.slice(indexToToggle + 1)
-      ]
+      const addedTracks = updateInArray(
+        state.tracks,
+        indexToToggle,
+        toggledTrack
+      )
       return { ...state, tracks: addedTracks }
     case types.TOGGLE_MUTE_SINGLE_TRACK: {
       const indexToToggle = state.tracks.findIndex(
@@ -106,11 +107,7 @@ export default (state = initialState, action) => {
         ...state.tracks[indexToToggle],
         muted: !state.tracks[indexToToggle].muted
       }
-      const newTracks = [
-        ...state.tracks.slice(0, indexToToggle),
-        toggledTrack,
-        ...state.tracks.slice(indexToToggle + 1)
-      ]
+      const newTracks = updateInArray(state.tracks, indexToToggle, toggledTrack)
       return { ...state, tracks: newTracks }
     }
     default:
