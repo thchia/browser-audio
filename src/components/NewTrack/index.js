@@ -2,6 +2,12 @@ import React from 'react'
 
 import connector from './container'
 
+/** TODO:
+ * Test for audio rendering
+ * Test for state change
+ * Test for muted state (priority of master/single)
+ */
+
 export class Track extends React.Component {
   constructor() {
     super()

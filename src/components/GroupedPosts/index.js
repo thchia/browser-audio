@@ -2,6 +2,13 @@ import React from 'react'
 
 import Post from '../Post'
 
+/**
+ * TODO:
+ * Test that correct number of 'username' elements are rendered
+ * Test that correct number of 'post' elements are rendered
+ * Test hidden state
+ */
+
 export default class GroupedPosts extends React.Component {
   constructor() {
     super()
