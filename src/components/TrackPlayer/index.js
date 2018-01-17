@@ -4,16 +4,7 @@ import Track from '../NewTrack'
 import connector from './container'
 import './index.css'
 
-const maxDuration = 60
-
-/**
- * TODO:
- * Test props and state for play(), stop(), muteAll()
- * Test for seekTime prop function
- * Test that stop() is called if currentTime exceeds maxDuration
- * Test that muteSingleTrack() prop function is called from renderTracks
- * Test that Track is rendered
- */
+export const maxDuration = 60
 
 export class TrackPlayer extends React.Component {
   constructor() {

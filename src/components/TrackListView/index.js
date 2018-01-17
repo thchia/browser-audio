@@ -2,11 +2,6 @@ import React from 'react'
 
 import connector from './container'
 
-/**
- * TODO:
- * Test that onChange the input toggles prop function
- */
-
 export const TrackListView = props => {
   function isTrackIdAdded(id) {
     return props.isTrackAdded(id)('added')

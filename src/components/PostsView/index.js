@@ -4,14 +4,6 @@ import GroupedPosts from '../GroupedPosts'
 import Post from '../Post'
 import connector from './container'
 
-/**
- * TODO:
- * Test that GroupedPosts is shown if groupByUserId is true
- * Test that Post is shown if groupByUserId is false
- * Test for 'Loading...' vs 'Fetch Posts' text
- * Test for props being called when various inputs are changed
- */
-
 export class PostsView extends React.Component {
   renderPosts(posts) {
     if (posts.length === 0 || Object.keys(posts || []).length === 0)
