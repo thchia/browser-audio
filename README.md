@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/thchia/browser-audio.svg?branch=master)](https://travis-ci.org/thchia/browser-audio)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 # Introduction
