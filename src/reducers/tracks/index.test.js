@@ -13,7 +13,8 @@ describe('tracks reducer', () => {
       ...initialState,
       tracks: [
         initialState.tracks[0],
-        { ...initialState.tracks[1], node: 'node', added: true }
+        { ...initialState.tracks[1], node: 'node', added: true },
+        ...initialState.tracks.slice(2)
       ]
     }
     const result = reducer(initialState, actions.registerTrack('node', 2))
@@ -80,7 +81,8 @@ describe('tracks reducer', () => {
       ...initialState,
       tracks: [
         initialState.tracks[0],
-        { ...initialState.tracks[1], added: !initialState.tracks[1].added }
+        { ...initialState.tracks[1], added: !initialState.tracks[1].added },
+        ...initialState.tracks.slice(2)
       ]
     }
     const result = reducer(initialState, actions.toggleAddTrack(2))
@@ -96,7 +98,8 @@ describe('tracks reducer', () => {
           ...initialState.tracks[1],
           muted: !initialState.tracks[1].muted,
           added: true
-        }
+        },
+        ...initialState.tracks.slice(2)
       ]
     }
     const dirtyState = reducer(initialState, actions.toggleAddTrack(2))
