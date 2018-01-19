@@ -23,6 +23,20 @@ export const initialState = {
         'https://upload.wikimedia.org/wikipedia/en/9/9f/Sample_of_%22Another_Day_in_Paradise%22.ogg',
       added: false,
       node: undefined
+    },
+    {
+      id: 3,
+      name: 'New Wave Kit',
+      src: 'https://static.bandlab.com/soundbanks/previews/new­wave­kit.ogg',
+      added: false,
+      node: undefined
+    },
+    {
+      id: 4,
+      name: 'Synth Organ',
+      src: 'https://static.bandlab.com/soundbanks/previews/synth­organ.ogg',
+      added: false,
+      node: undefined
     }
   ]
 }

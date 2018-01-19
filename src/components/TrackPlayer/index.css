@@ -11,7 +11,7 @@
 
 .master-seek-bar input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 170px;
+  height: 330px;
   width: 5px;
   background-color: black;
   position: relative;
