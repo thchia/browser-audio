@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 This is a simple application with 2 routes:
 
 1. Allow user to fetch a number of posts, and sort the results (`'/'`);
-2. Allow user to play 2 audio samples in the browser (`'/tracks'`)
+2. Allow user to play up to 4 audio samples in the browser (`'/tracks'`)
 
 ## Running locally
 
